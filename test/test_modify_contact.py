@@ -1,6 +1,10 @@
 from model.contact import Contact
 
 
-def test_modify_first_contact(app):
-    app.contact.modify_first_contact(Contact(firstname="3737675676", middlename="", lastname="", nickname="", title="", company="", address="", home="", mobile="",
-                               work_phone="", fax="", birth_year="", ayear="", address2="", phone2="", notes=""))
+def test_modify_contact_firstname(app):
+    app.contact.modify_first_contact(Contact(firstname="New name"))
+
+
+def test_modify_contact_lastname(app):
+    app.contact.modify_first_contact(Contact(lastname="New lastname"))
+
