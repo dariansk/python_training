@@ -38,6 +38,6 @@ class SessionHelper:
                 return
             else:
                 self.logout()
-        self.login(self, username, password)
+        self.login(username, password)
 
 
