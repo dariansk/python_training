@@ -19,33 +19,16 @@ class ContactHelper:
         self.change_field_value("firstname", contact.firstname)
         self.change_field_value("middlename", contact.middlename)
         self.change_field_value("lastname", contact.lastname)
-        self.change_field_value("nickname", contact.nickname)
-        self.change_field_value("title", contact.title)
-        self.change_field_value("company", contact.company)
         self.change_field_value("address", contact.address)
-        self.change_field_value("home", contact.home)
-        self.change_field_value("mobile", contact.mobile)
-        self.change_field_value("work", contact.work_phone)
-        self.change_field_value("fax", contact.fax)
-        self.change_field_value("byear", contact.birth_year)
-        self.change_field_value("ayear", contact.ayear)
-#        if not wd.find_element_by_xpath("//div[@id='content']/form/select[1]//option[3]").is_selected():
-#           wd.find_element_by_xpath("//div[@id='content']/form/select[1]//option[3]").click()
-#       if not wd.find_element_by_xpath("//div[@id='content']/form/select[2]//option[2]").is_selected():
-#          wd.find_element_by_xpath("//div[@id='content']/form/select[2]//option[2]").click()
-#        if not wd.find_element_by_xpath("//div[@id='content']/form/select[3]//option[3]").is_selected():
-#            wd.find_element_by_xpath("//div[@id='content']/form/select[3]//option[3]").click()
-#       if not wd.find_element_by_xpath("//div[@id='content']/form/select[4]//option[3]").is_selected():
-#           wd.find_element_by_xpath("//div[@id='content']/form/select[4]//option[3]").click()
+        self.change_field_value("home", contact.homephone)
+        self.change_field_value("mobile", contact.mobilephone)
+        self.change_field_value("work", contact.workphone)
 #        wd.find_element_by_name("address2").click()
 #        wd.find_element_by_name("address2").clear()
 #       wd.find_element_by_name("address2").send_keys(contact.address2)
 #        wd.find_element_by_name("phone2").click()
 #        wd.find_element_by_name("phone2").clear()
 #        wd.find_element_by_name("phone2").send_keys(contact.phone2)
-#       wd.find_element_by_name("notes").click()
-#        wd.find_element_by_name("notes").clear()
-#        wd.find_element_by_name("notes").send_keys(contact.notes)
 
     def change_field_value(self, field_name, text):
         wd = self.app.wd
@@ -56,7 +39,6 @@ class ContactHelper:
 
     def delete_first_contact(self):
         self.delete_contact_by_index(0)
-
 
     def delete_contact_by_index(self, index):
         wd = self.app.wd
@@ -113,10 +95,10 @@ class ContactHelper:
                 text1 = cells[1].text
                 text2 = cells[2].text
                 id = cells[0].find_element_by_tag_name("input").get_attribute("value")
-                all_phones = cells[5].text.splitlines()
+                all_phones = cells[5].text
+                all_emails = cells[4].text
                 self.contact_cache.append(Contact(firstname=text2, lastname=text1, id=id,
-                                                  homephone=all_phones[0], workphone=all_phones[2],
-                                                  mobilephone=all_phones[1], secondaryphone=all_phones[3]))
+                                                  all_phones_from_home_page=all_phones, all_emails_from_home_page=all_emails))
         return list(self.contact_cache)
 
     def open_contact_to_edit_by_index(self, index):
@@ -143,9 +125,12 @@ class ContactHelper:
         workphone = wd.find_element_by_name("work").get_attribute("value")
         mobilephone = wd.find_element_by_name("mobile").get_attribute("value")
         secondaryphone = wd.find_element_by_name("phone2").get_attribute("value")
+        email = wd.find_element_by_name("email").get_attribute("value")
+        email2 = wd.find_element_by_name("email2").get_attribute("value")
+        email3 = wd.find_element_by_name("email3").get_attribute("value")
         return Contact(firstname=firstname, lastname=lastname, id=id,
                        homephone=homephone, workphone=workphone,
-                       mobilephone=mobilephone, secondaryphone=secondaryphone)
+                       mobilephone=mobilephone, secondaryphone=secondaryphone, email=email, email2=email2, email3=email3)
 
     def get_contact_from_view_page(self, index):
         wd = self.app.wd
