@@ -18,6 +18,7 @@ def load_config(file):
             target = json.load(f)
     return target
 
+
 @pytest.fixture
 def app(request):
     global fixture
@@ -25,7 +26,7 @@ def app(request):
     browser = request.config.getoption("--browser")
     web_config = load_config(request.config.getoption("--target"))['web']
     if fixture is None or not fixture.is_valid():
-        fixture = Application(browser=browser, base_url=target["baseUrl"])
+        fixture = Application(browser=browser, base_url=web_config["baseUrl"])
     fixture.session.ensure_login(username=web_config["username"], password=web_config["password"])
     return fixture
 
@@ -49,9 +50,15 @@ def stop(request):
     return fixture
 
 
+@pytest.fixture
+def check_ui(request):
+    return request.config.getoption("--check_ui")
+
+
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
     parser.addoption("--target", action="store", default="target.json")
+    parser.addoption("--check_ui", action="store_true")
 
 
 def pytest_generate_tests(metafunc):
@@ -65,7 +72,7 @@ def pytest_generate_tests(metafunc):
 
 
 def load_from_module(module):
-    return importlib.import_module("data.%s"  % module).testdata
+    return importlib.import_module("data.%s" % module).testdata
 
 
 def load_from_json(file):
