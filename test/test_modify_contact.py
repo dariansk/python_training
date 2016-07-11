@@ -9,7 +9,7 @@ def test_modify_some_contact(app, db, check_ui):
     contact = random.choice(old_contacts)
     modified_contact = Contact(firstname="New name", lastname="Newlastname")
     modified_contact.id = contact.id
-    app.contact.modify_contact_by_id(id, modified_contact)
+    app.contact.modify_contact_by_id(modified_contact.id, modified_contact)
     new_contacts = db.get_contact_list()
     old_contacts.remove(contact)
     old_contacts.append(modified_contact)

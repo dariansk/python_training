@@ -9,7 +9,7 @@ def test_modify_group_name(app, db, check_ui):
     group = random.choice(old_groups)
     modified_group = Group(name="New group")
     modified_group.id = group.id
-    app.group.modify_group_by_id(id, modified_group)
+    app.group.modify_group_by_id(modified_group.id, modified_group)
     new_groups = db.get_group_list()
     old_groups.remove(group)
     old_groups.append(modified_group)
