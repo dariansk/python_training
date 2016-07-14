@@ -9,6 +9,8 @@ orm = ORMFixture(host="127.0.0.1", name="addressbook", user="root", password="")
 
 
 def test_delete_contact_from_group(app):
+    if len(orm.get_group_list()) == 0:
+        app.group.create(Group(name="One more test"))
     # precondition: there is a group with contacts in it
     no_contacts_in_groups = True
     groups = orm.get_group_list()
@@ -16,7 +18,7 @@ def test_delete_contact_from_group(app):
         if len(orm.get_contacts_in_group(item)) > 0:
             no_contacts_in_groups = False
             break
-    if no_contacts_in_groups:
+    if no_contacts_in_groups: 
         app.contact.add_contact_to_group(Contact(firstname="New contact", lastname="New lastname"), groups[0])
     # select group and contact
     group = None
