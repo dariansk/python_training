@@ -18,7 +18,7 @@ def test_delete_contact_from_group(app):
         if len(orm.get_contacts_in_group(item)) > 0:
             no_contacts_in_groups = False
             break
-    if no_contacts_in_groups: 
+    if no_contacts_in_groups:
         app.contact.add_contact_to_group(Contact(firstname="New contact", lastname="New lastname"), groups[0])
     # select group and contact
     group = None
